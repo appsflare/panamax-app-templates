@@ -1,7 +1,6 @@
 ---
-name: Kong Gateway app
-description: The application with kong api configured with cassandra and kong-dashboard
-  services
+name: ''
+description: ''
 keywords: ''
 type: Default
 documentation: ''
@@ -36,3 +35,14 @@ images:
   - host_port: '8080'
     container_port: '8080'
     proto: TCP
+- name: ngrok_proxy
+  source: centurylink/ngrok:latest
+  category: Proxy
+  type: Default
+  environment:
+  - variable: HTTP_PORT
+    value: '8000'
+- name: rabbitmq
+  source: rabbitmq:latest
+  category: IPC
+  type: Default

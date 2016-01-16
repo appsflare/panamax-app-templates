@@ -1,7 +1,7 @@
 ---
-name: ''
-description: ''
-keywords: ''
+name: Kong Gateway app
+description: Base Kong Based Application template
+keywords: kong api nodejs app
 type: Default
 documentation: ''
 images:

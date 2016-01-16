@@ -1,0 +1,65 @@
+---
+name: Ludicrum App
+description: Ludicrum App built with MicroServices
+keywords: ''
+type: NodeJS
+documentation: ''
+images:
+- name: cassandra
+  source: mashape/cassandra:latest
+  category: API Gateway
+  type: Default
+  ports:
+  - host_port: '9042'
+    container_port: '9042'
+    proto: TCP
+- name: kong
+  source: mashape/kong:latest
+  category: API Gateway
+  type: Default
+  ports:
+  - host_port: '8000'
+    container_port: '8000'
+    proto: TCP
+  - host_port: '8001'
+    container_port: '8001'
+    proto: TCP
+  links:
+  - service: cassandra
+    alias: cassandra
+- name: kong-dashboard
+  source: pgbi/kong-dashboard:latest
+  category: API Gateway
+  type: Default
+  ports:
+  - host_port: '8080'
+    container_port: '8080'
+    proto: TCP
+- name: ngrok_proxy
+  source: centurylink/ngrok:latest
+  category: Proxy
+  type: Default
+  environment:
+  - variable: HTTP_PORT
+    value: '8000'
+  - variable: HTTP_PORT1
+    value: '8001'
+- name: rabbitmq
+  source: rabbitmq:latest
+  category: IPC
+  type: Default
+- name: Authentication
+  source: appsflare/node-app:latest
+  category: Microservices
+  type: Default
+  expose:
+  - '4000'
+  ports:
+  - host_port: '4000'
+    container_port: '4000'
+    proto: TCP
+  environment:
+  - variable: PACKAGE_URL
+    value: https://github.com/appsflare/ludicrum-authentication/archive/master.zip
+  - variable: APP_DIR_NAME
+    value: ludicrum-authentication-master
